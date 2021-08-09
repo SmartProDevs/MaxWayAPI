@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
+
 class Category(models.Model):
     title = models.CharField(null=False, blank=False, max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -20,7 +21,7 @@ class Product(models.Model):
 class Customer(models.Model):
     first_name = models.CharField(null=False, blank=False,max_length=100)
     last_name = models.CharField(null=False, blank=False,max_length=100)
-    phone_number = models.CharField(null=False, blank=False,max_length=100)
+    phone_number = models.CharField(null=False, blank=False,max_length=100, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
 class Order(models.Model):
@@ -31,9 +32,9 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 class OrderProduct(models.Model):
-    title = models.CharField(null=False, blank=False, max_length=100)
-    description = models.TextField(null=False, blank=False)
-    category = models.ForeignKey(Category, null=True, on_delete=models.SET_NULL)
+    # title = models.CharField(null=False, blank=False, max_length=100)
+    # description = models.TextField(null=False, blank=False)
+    # category = models.ForeignKey(Category, null=True, on_delete=models.SET_NULL)
     count = models.IntegerField(null=False, blank=False)
     price = models.IntegerField(null=False, blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
