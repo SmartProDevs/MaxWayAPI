@@ -28,7 +28,8 @@ def get_category_products():
                 {
                     "id": category_product['id'],
                     "title": category_product['title'],
-                    "products": json.loads(category_product['products'])
+                    "products": json.loads(category_product['products']),
+                    "slug": category_product['slug']
                 }
             )
         )
@@ -62,3 +63,12 @@ def get_customer_by_phone(phone_number):
             "phone_number": customer['phone_number']
         }
     )
+
+def get_products_by_ids(ids):
+    with closing(connection.cursor()) as cursor:
+        cursor.execute(
+            f"""SELECT * FROM food_product WHERE id in ({str(ids).strip("[]")})"""
+        )
+        products = dictfetchall(cursor)
+    return products
+

@@ -4,7 +4,6 @@ from . import services
 from rest_framework.exceptions import NotFound
 from .serializers import CustomerOrderSerializer
 
-
 class CategoryProductsView(GenericAPIView):
     def get(self, request, *args, **kwargs):
         category_products = services.get_category_products()
@@ -25,3 +24,11 @@ class CustomerOrder(GenericAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
+
+class ProductView(GenericAPIView):
+    def get(self, request):
+        ids = request.data.get("ids", [])
+        if not ids:
+            raise NotFound("Empty array")
+        products = services.get_products_by_ids(ids)
+        return Response(products)
