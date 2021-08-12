@@ -27,7 +27,7 @@ class CustomerOrder(GenericAPIView):
 
 class ProductView(GenericAPIView):
     def get(self, request):
-        ids = request.data.get("ids", [])
+        ids = request.query_params.getList("ids[]")
         if not ids:
             raise NotFound("Empty array")
         products = services.get_products_by_ids(ids)
